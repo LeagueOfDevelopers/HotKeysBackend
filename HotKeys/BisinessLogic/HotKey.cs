@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 
 namespace BisinessLogic
 {
-    class HotKey
+    public class HotKey
     {
         public Guid Id { get; }
-        public string _description { get; }
-        private string[] Combination;
-
-        public HotKey(Guid id, string description, string[] combination)
+        public string Description { get; }
+        public Dictionary<int, string> Combination;
+        public HotKey(Guid id, string description, Dictionary<int, string> combination)
         {
             Id = id;
-            _description = description;
+            Description = description;
             Combination = combination;
         }
-
-        public IEnumerable<string> _combination => Combination.AsEnumerable();
 
     }
 }

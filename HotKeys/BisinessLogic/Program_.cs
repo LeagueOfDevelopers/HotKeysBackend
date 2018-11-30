@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace BisinessLogic
 {
-    class Program_
+    public class Program_
     {
+        public Program_(Guid id, string name, List<HotKey> hotKeys)
+        {
+            this.id = id;
+            this.name = name;
+            HotKeys = hotKeys;
+        }
+
         public Guid id { get; }
         public string name { get; }
         private List<HotKey> HotKeys;
