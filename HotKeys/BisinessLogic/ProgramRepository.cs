@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace BisinessLogic
 {
-    class ProgramRepository : IRepository<Program_>
+    class ProgramRepository : IRepository<Program>
     {
-        private Dictionary<Guid,Program_> programs;
-        public Program_ Get(Guid id)
+        private Dictionary<Guid,Program> programs;
+        public Program Get(Guid id)
         {
             return programs[id];
         }
 
-        public void Set(Guid id, Program_ item)
+        public void Set(Guid id, Program item)
         {
             programs.Add(id, item);
         }

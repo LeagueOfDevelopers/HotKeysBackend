@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BisinessLogic
 {
-    public class Program_
+    public class Program
     {
-        public Program_(Guid id, string name, List<HotKey> hotKeys)
+        public Program(Guid id, string name, List<HotKey> hotKeys)
         {
             this.id = id;
             this.name = name;
