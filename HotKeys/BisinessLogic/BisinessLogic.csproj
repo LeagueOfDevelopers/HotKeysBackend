@@ -49,7 +49,7 @@
     <Compile Include="HotKey.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ProgramRepository.cs" />
-    <Compile Include="Program_.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
