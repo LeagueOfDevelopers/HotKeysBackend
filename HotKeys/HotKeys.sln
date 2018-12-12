@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotKeys", "HotKeys\HotKeys.csproj", "{1622A80C-899A-4886-90EC-7A899C486899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotKeys", "HotKeys\HotKeys.csproj", "{1622A80C-899A-4886-90EC-7A899C486899}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisinessLogic", "BisinessLogic\BisinessLogic.csproj", "{D943D77E-1C57-483E-9F1C-13141186DC60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1622A80C-899A-4886-90EC-7A899C486899}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1622A80C-899A-4886-90EC-7A899C486899}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1622A80C-899A-4886-90EC-7A899C486899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D943D77E-1C57-483E-9F1C-13141186DC60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D943D77E-1C57-483E-9F1C-13141186DC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D943D77E-1C57-483E-9F1C-13141186DC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D943D77E-1C57-483E-9F1C-13141186DC60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
