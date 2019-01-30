@@ -9,9 +9,9 @@ namespace HotKeys.Controllers
     {
         [HttpGet]
         [Route("programs/{id}")]
-        public Program_ GetProgramByID(Guid id)
+        public Program GetProgramByID(Guid id)
         {
-            return new Program_(id, "MaratPidor", new List<HotKey>());
+            return new Program(id, "MaratPidor", new List<HotKey>());
         }
     }
 }

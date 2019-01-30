@@ -10,13 +10,15 @@ namespace BisinessLogic
     {
         public Guid Id { get; }
         public string Description { get; }
-        public Dictionary<int, string> Combination;
-        public HotKey(Guid id, string description, Dictionary<int, string> combination)
+        private List<Key> Combination;
+        public IEnumerable<Key> combination => Combination.AsEnumerable();
+
+
+        public HotKey(Guid id, string description, List<Key> combination)
         {
             Id = id;
             Description = description;
             Combination = combination;
         }
-
     }
 }

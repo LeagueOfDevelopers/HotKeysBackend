@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotKeys", "HotKeys\HotKeys.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisinessLogic", "BisinessLogic\BisinessLogic.csproj", "{D943D77E-1C57-483E-9F1C-13141186DC60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "SessionTest\Tests.csproj", "{213C34B3-F5D8-45DF-8A9B-6EAA59A00B12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D943D77E-1C57-483E-9F1C-13141186DC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D943D77E-1C57-483E-9F1C-13141186DC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D943D77E-1C57-483E-9F1C-13141186DC60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{213C34B3-F5D8-45DF-8A9B-6EAA59A00B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{213C34B3-F5D8-45DF-8A9B-6EAA59A00B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{213C34B3-F5D8-45DF-8A9B-6EAA59A00B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{213C34B3-F5D8-45DF-8A9B-6EAA59A00B12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
