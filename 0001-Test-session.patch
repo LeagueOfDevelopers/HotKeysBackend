@@ -1,0 +1,293 @@
+From 04e49093ce4b61fe89b6297b8e9fc893edafd758 Mon Sep 17 00:00:00 2001
+From: LavanderSea <tanya.smith1712@gmail.com>
+Date: Wed, 30 Jan 2019 12:30:17 +0300
+Subject: [PATCH] Test session
+
+---
+ HotKeys/BisinessLogic/BisinessLogic.csproj    |  2 +
+ HotKeys/BisinessLogic/HotKey.cs               |  8 ++--
+ HotKeys/BisinessLogic/Key.cs                  | 36 +++++++++++++++
+ HotKeys/BisinessLogic/Session.cs              | 45 +++++++++++++++++++
+ HotKeys/HotKeys.sln                           |  6 +++
+ .../HotKeys/Controllers/ProgramController.cs  |  4 +-
+ HotKeys/HotKeys/Program.cs                    | 12 +++++
+ HotKeys/HotKeys/Startup.cs                    |  6 +++
+ HotKeys/SessionTest/BusinessLogicTest.cs      | 14 ++++++
+ HotKeys/SessionTest/Tests.csproj              | 15 +++++++
+ 10 files changed, 143 insertions(+), 5 deletions(-)
+ create mode 100644 HotKeys/BisinessLogic/Key.cs
+ create mode 100644 HotKeys/BisinessLogic/Session.cs
+ create mode 100644 HotKeys/SessionTest/BusinessLogicTest.cs
+ create mode 100644 HotKeys/SessionTest/Tests.csproj
+
+diff --git a/HotKeys/BisinessLogic/BisinessLogic.csproj b/HotKeys/BisinessLogic/BisinessLogic.csproj
+index 0eb0907..32bc934 100644
+--- a/HotKeys/BisinessLogic/BisinessLogic.csproj
++++ b/HotKeys/BisinessLogic/BisinessLogic.csproj
+@@ -48,9 +48,11 @@
+   <ItemGroup>
+     <Compile Include="HotKey.cs" />
+     <Compile Include="IRepository.cs" />
++    <Compile Include="Key.cs" />
+     <Compile Include="ProgramRepository.cs" />
+     <Compile Include="Program.cs" />
+     <Compile Include="Properties\AssemblyInfo.cs" />
++    <Compile Include="Session.cs" />
+   </ItemGroup>
+   <ItemGroup>
+     <None Include="App.config" />
+diff --git a/HotKeys/BisinessLogic/HotKey.cs b/HotKeys/BisinessLogic/HotKey.cs
+index f3a4312..c551e21 100644
+--- a/HotKeys/BisinessLogic/HotKey.cs
++++ b/HotKeys/BisinessLogic/HotKey.cs
+@@ -10,13 +10,15 @@ namespace BisinessLogic
+     {
+         public Guid Id { get; }
+         public string Description { get; }
+-        public Dictionary<int, string> Combination;
+-        public HotKey(Guid id, string description, Dictionary<int, string> combination)
++        private List<Key> Combination;
++        public IEnumerable<Key> combination => Combination.AsEnumerable();
++
++
++        public HotKey(Guid id, string description, List<Key> combination)
+         {
+             Id = id;
+             Description = description;
+             Combination = combination;
+         }
+-
+     }
+ }
+diff --git a/HotKeys/BisinessLogic/Key.cs b/HotKeys/BisinessLogic/Key.cs
+new file mode 100644
+index 0000000..c6401a0
+--- /dev/null
++++ b/HotKeys/BisinessLogic/Key.cs
+@@ -0,0 +1,36 @@
++﻿using System;
++using System.Collections.Generic;
++using System.Linq;
++using System.Text;
++using System.Threading.Tasks;
++
++namespace BisinessLogic
++{
++    public class Key
++    {
++        int Code;
++        string Name;
++
++        public Key(int code, string name)
++        {
++            Code = code;
++            Name = name;
++        }
++
++        public override bool Equals(object obj)
++        {
++            var key = obj as Key;
++            return key != null &&
++                   Code == key.Code &&
++                   Name == key.Name;
++        }
++
++        public override int GetHashCode()
++        {
++            var hashCode = -168117446;
++            hashCode = hashCode * -1521134295 + Code.GetHashCode();
++            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
++            return hashCode;
++        }
++    }
++}
+diff --git a/HotKeys/BisinessLogic/Session.cs b/HotKeys/BisinessLogic/Session.cs
+new file mode 100644
+index 0000000..94da917
+--- /dev/null
++++ b/HotKeys/BisinessLogic/Session.cs
+@@ -0,0 +1,45 @@
++﻿using System;
++using System.Collections.Generic;
++using System.Linq;
++
++namespace BisinessLogic
++{
++    public class Session
++    {
++        public int Id { get; }
++        private List<HotKey> hotKeys;
++        Random random;
++
++        string Start(int id, Program test_program) //пока id int, потому что не факт что будет Guid
++        {
++            random = new Random();
++            hotKeys = test_program.hotKeys.ToList();
++            var question = CreateQuestion();
++            return question;
++        }
++
++        string MoveToNextQuestion()
++        {
++            if (hotKeys.Count() > 0)
++            {
++                var question = CreateQuestion();
++                return question;
++            }
++            else
++                return string.Empty;
++        }
++        string CreateQuestion()
++        {
++            var index = random.Next(hotKeys.Count()); 
++            return hotKeys[index].Description;
++        }
++
++        bool CheckAnswer(string question, List<Key> answer)
++        {
++            var hotKey = hotKeys.FirstOrDefault(hk => hk.Description == question);
++            var result = (hotKey.combination.ToList() == answer);
++            return result;
++        }
++
++    }
++}
+diff --git a/HotKeys/HotKeys.sln b/HotKeys/HotKeys.sln
+index 4047510..3ba227c 100644
+--- a/HotKeys/HotKeys.sln
++++ b/HotKeys/HotKeys.sln
+@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotKeys", "HotKeys\HotKeys.
+ EndProject
+ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisinessLogic", "BisinessLogic\BisinessLogic.csproj", "{D943D77E-1C57-483E-9F1C-13141186DC60}"
+ EndProject
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "SessionTest\Tests.csproj", "{213C34B3-F5D8-45DF-8A9B-6EAA59A00B12}"
++EndProject
+ Global
+ 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+ 		Debug|Any CPU = Debug|Any CPU
+@@ -21,6 +23,10 @@ Global
+ 		{D943D77E-1C57-483E-9F1C-13141186DC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+ 		{D943D77E-1C57-483E-9F1C-13141186DC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+ 		{D943D77E-1C57-483E-9F1C-13141186DC60}.Release|Any CPU.Build.0 = Release|Any CPU
++		{213C34B3-F5D8-45DF-8A9B-6EAA59A00B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{213C34B3-F5D8-45DF-8A9B-6EAA59A00B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{213C34B3-F5D8-45DF-8A9B-6EAA59A00B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{213C34B3-F5D8-45DF-8A9B-6EAA59A00B12}.Release|Any CPU.Build.0 = Release|Any CPU
+ 	EndGlobalSection
+ 	GlobalSection(SolutionProperties) = preSolution
+ 		HideSolutionNode = FALSE
+diff --git a/HotKeys/HotKeys/Controllers/ProgramController.cs b/HotKeys/HotKeys/Controllers/ProgramController.cs
+index 359b668..776d4eb 100644
+--- a/HotKeys/HotKeys/Controllers/ProgramController.cs
++++ b/HotKeys/HotKeys/Controllers/ProgramController.cs
+@@ -9,9 +9,9 @@ namespace HotKeys.Controllers
+     {
+         [HttpGet]
+         [Route("programs/{id}")]
+-        public Program_ GetProgramByID(Guid id)
++        public Program GetProgramByID(Guid id)
+         {
+-            return new Program_(id, "MaratPidor", new List<HotKey>());
++            return new Program(id, "MaratPidor", new List<HotKey>());
+         }
+     }
+ }
+\ No newline at end of file
+diff --git a/HotKeys/HotKeys/Program.cs b/HotKeys/HotKeys/Program.cs
+index 4528903..77761f5 100644
+--- a/HotKeys/HotKeys/Program.cs
++++ b/HotKeys/HotKeys/Program.cs
+@@ -3,6 +3,7 @@ using System.Collections.Generic;
+ using System.IO;
+ using System.Linq;
+ using System.Threading.Tasks;
++using BisinessLogic;
+ using Microsoft.AspNetCore;
+ using Microsoft.AspNetCore.Hosting;
+ using Microsoft.Extensions.Configuration;
+@@ -12,6 +13,17 @@ namespace HotKeys
+ {
+     public class Program
+     {
++        private Guid id;
++        private string v;
++        private List<HotKey> list;
++
++        public Program(Guid id, string v, List<HotKey> list)
++        {
++            this.id = id;
++            this.v = v;
++            this.list = list;
++        }
++
+         public static void Main(string[] args)
+         {
+             BuildWebHost(args).Run();
+diff --git a/HotKeys/HotKeys/Startup.cs b/HotKeys/HotKeys/Startup.cs
+index 6b9daf2..7bf5dd2 100644
+--- a/HotKeys/HotKeys/Startup.cs
++++ b/HotKeys/HotKeys/Startup.cs
+@@ -24,6 +24,11 @@ namespace HotKeys
+         public void ConfigureServices(IServiceCollection services)
+         {
+             services.AddMvc();
++            services.AddCors(options =>
++            {
++                options.AddPolicy("AllowSpecificOrigin",
++                    builder => builder.AllowAnyOrigin());
++            });
+         }
+ 
+         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+@@ -33,6 +38,7 @@ namespace HotKeys
+             {
+                 app.UseDeveloperExceptionPage();
+             }
++            app.UseCors("AllowSpecificOrigin");
+ 
+             app.UseMvc();
+         }
+diff --git a/HotKeys/SessionTest/BusinessLogicTest.cs b/HotKeys/SessionTest/BusinessLogicTest.cs
+new file mode 100644
+index 0000000..e403c89
+--- /dev/null
++++ b/HotKeys/SessionTest/BusinessLogicTest.cs
+@@ -0,0 +1,14 @@
++using Microsoft.VisualStudio.TestTools.UnitTesting;
++
++namespace SessionTest
++{
++    [TestClass]
++    public class SessionTest
++    {
++        [TestMethod]
++        public void TestStart()
++        {
++
++        }
++    }
++}
+diff --git a/HotKeys/SessionTest/Tests.csproj b/HotKeys/SessionTest/Tests.csproj
+new file mode 100644
+index 0000000..3482ba1
+--- /dev/null
++++ b/HotKeys/SessionTest/Tests.csproj
+@@ -0,0 +1,15 @@
++<Project Sdk="Microsoft.NET.Sdk">
++
++  <PropertyGroup>
++    <TargetFramework>netcoreapp2.1</TargetFramework>
++
++    <IsPackable>false</IsPackable>
++  </PropertyGroup>
++
++  <ItemGroup>
++    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
++    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
++    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
++  </ItemGroup>
++
++</Project>
+-- 
+2.19.0.windows.1
+
