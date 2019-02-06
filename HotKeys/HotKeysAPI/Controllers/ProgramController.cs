@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using BisinessLogic;
+using HotKeysLibrary.Entities;
 using System.Collections.Generic;
 
-namespace HotKeys.Controllers
+namespace HotKeysAPI.Controllers
 {
     public class ProgramController : ControllerBase
     {
         [HttpGet]
         [Route("programs/{id}")]
-        public Program GetProgramByID(Guid id)
+        public HotKeysLibrary.Entities.Program GetProgramByID(Guid id)
         {
-            return new Program(id, "MaratPidor", new List<HotKey>());
+            return new HotKeysLibrary.Entities.Program(id, "Figma", new List<HotKey>());
         }
     }
 }
