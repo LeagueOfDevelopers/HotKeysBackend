@@ -4,7 +4,6 @@ import "HotKeysBackend/key"
 
 var MockHotkeys = []*Hotkey{
 	{
-		Id:          [16]byte{3},
 		Description: "a",
 		Combination: []*key.Key{
 			{Code: 1, Name: "1"},
@@ -12,7 +11,6 @@ var MockHotkeys = []*Hotkey{
 		},
 	},
 	{
-		Id:          [16]byte{4},
 		Description: "b",
 		Combination: []*key.Key{
 			{Code: 1, Name: "1"},
@@ -20,7 +18,6 @@ var MockHotkeys = []*Hotkey{
 		},
 	},
 	{
-		Id:          [16]byte{5},
 		Description: "c",
 		Combination: []*key.Key{
 			{Code: 4, Name: "4"},
@@ -31,7 +28,6 @@ var MockHotkeys = []*Hotkey{
 
 var MockHotkeys2 = []*Hotkey{
 	{
-		Id:          [16]byte{6},
 		Description: "d",
 		Combination: []*key.Key{
 			{Code: 1, Name: "1"},
@@ -39,7 +35,6 @@ var MockHotkeys2 = []*Hotkey{
 		},
 	},
 	{
-		Id:          [16]byte{7},
 		Description: "e",
 		Combination: []*key.Key{
 			{Code: 4, Name: "4"},
