@@ -1,13 +1,12 @@
 package getting
 
 import (
+	"HotKeysBackend/constant"
 	"HotKeysBackend/converter"
 	"HotKeysBackend/program"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
-
-const ProgramName = "program"
 
 func HandleGetPrograms(context *gin.Context, getter Service) {
 	programs, err := getter.GetPrograms()
@@ -23,7 +22,7 @@ func HandleGetPrograms(context *gin.Context, getter Service) {
 }
 
 func HandleGetProgram(context *gin.Context, getter Service) {
-	programName := context.Param(ProgramName)
+	programName := context.Param(constant.ProgramName)
 	currentProgram, err := getter.GetProgram(programName)
 	if err != nil {
 		sendError(context, err)
@@ -37,7 +36,7 @@ func HandleGetProgram(context *gin.Context, getter Service) {
 }
 
 func HandleGetHotkeys(context *gin.Context, getter Service) {
-	programName := context.Param(ProgramName)
+	programName := context.Param(constant.ProgramName)
 	hotkeys, err := getter.GetHotkeysForProgram(programName)
 	if err != nil {
 		sendError(context, err)

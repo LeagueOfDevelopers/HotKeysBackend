@@ -17,7 +17,7 @@ type service struct {
 	keyRepository     key.Repository
 }
 
-func NewService(programRepository program.Repository, keyRepository key.Repository) Service {
+func CreateService(programRepository program.Repository, keyRepository key.Repository) Service {
 	return &service{
 		programRepository: programRepository,
 		keyRepository:     keyRepository,

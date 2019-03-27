@@ -1,6 +1,8 @@
 package main
 
 import (
+	"HotKeysBackend/checking"
+	"HotKeysBackend/constant"
 	"HotKeysBackend/getting"
 	"HotKeysBackend/storage"
 	"fmt"
@@ -9,8 +11,9 @@ import (
 
 var (
 	handleGetPrograms = "/programs"
-	handleGetProgram  = fmt.Sprintf("/program/:%s", getting.ProgramName)
-	handleGetHotkeys  = fmt.Sprintf("/program/:%s/hotkeys", getting.ProgramName)
+	handleGetProgram  = fmt.Sprintf("/program/:%s", constant.ProgramName)
+	handleGetHotkeys  = fmt.Sprintf("/program/:%s/hotkeys", constant.ProgramName)
+	handleCheckHotkey = fmt.Sprintf("/program/:%s/check", constant.ProgramName)
 )
 
 func main() {
@@ -20,7 +23,8 @@ func main() {
 
 	programStorage := storage.GetProgramInMemoryRepository()
 	keyStorage := storage.GetKeyInMemoryRepository()
-	getter := getting.NewService(programStorage, keyStorage)
+	getter := getting.CreateService(programStorage, keyStorage)
+	checker := checking.CreateService(programStorage, keyStorage)
 
 	router := gin.Default()
 
@@ -32,6 +36,9 @@ func main() {
 	})
 	router.GET(handleGetHotkeys, func(context *gin.Context) {
 		getting.HandleGetHotkeys(context, getter)
+	})
+	router.POST(handleCheckHotkey, func(context *gin.Context) {
+		checking.HandleCheckHotkey(context, checker)
 	})
 
 	_ = router.Run()
