@@ -7,6 +7,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var (
+	handleGetPrograms = "/programs"
+	handleGetProgram  = fmt.Sprintf("/program/:%s", getting.ProgramName)
+	handleGetHotkeys  = fmt.Sprintf("/program/:%s/hotkeys", getting.ProgramName)
+)
+
 func main() {
 	// TODO uncomment when database appears
 	//programStorage := storage.GetProgramDatabaseRepository()
@@ -18,13 +24,13 @@ func main() {
 
 	router := gin.Default()
 
-	router.GET("/programs", func(context *gin.Context) {
+	router.GET(handleGetPrograms, func(context *gin.Context) {
 		getting.HandleGetPrograms(context, getter)
 	})
-	router.GET(fmt.Sprintf("/program/:%s", getting.ProgramName), func(context *gin.Context) {
+	router.GET(handleGetProgram, func(context *gin.Context) {
 		getting.HandleGetProgram(context, getter)
 	})
-	router.GET(fmt.Sprintf("/program/:%s/hotkeys", getting.ProgramName), func(context *gin.Context) {
+	router.GET(handleGetHotkeys, func(context *gin.Context) {
 		getting.HandleGetHotkeys(context, getter)
 	})
 

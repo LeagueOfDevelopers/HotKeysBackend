@@ -44,8 +44,9 @@ func HandleGetHotkeys(context *gin.Context, getter Service) {
 		panic(program.ErrorGetProgram)
 	}
 
+	hotkeysResponse := converter.ConvertHotkeysToResponse(hotkeys)
 	context.JSON(http.StatusOK, gin.H{
-		"hotkeys": hotkeys,
+		"hotkeys": hotkeysResponse,
 	})
 }
 
