@@ -20,7 +20,7 @@ func main() {
 	router.GET("/programs", func(context *gin.Context) {
 		getting.HandleGetPrograms(context, getter)
 	})
-	router.GET("/programs/:program", func(context *gin.Context) {
+	router.GET("/program/:program", func(context *gin.Context) {
 		getting.HandleGetProgram(context, getter)
 	})
 

@@ -5,11 +5,6 @@ import (
 	"HotKeysBackend/program"
 )
 
-type InMemoryStorage struct {
-	programRepository programInMemoryRepository
-	keyRepository     keyInMemoryRepository
-}
-
 type programInMemoryRepository struct {
 	Programs []*program.Program
 }
