@@ -2,15 +2,18 @@ package getting
 
 import (
 	"HotKeysBackend/converter"
+	"HotKeysBackend/program"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
+
+const ProgramName = "program"
 
 func HandleGetPrograms(context *gin.Context, getter Service) {
 	programs, err := getter.GetPrograms()
 	if err != nil {
 		sendError(context, err)
-		panic("error while getting programs")
+		panic(program.ErrorGetProgram)
 	}
 
 	programsResponse := converter.ConvertProgramsToResponse(programs)
@@ -20,16 +23,29 @@ func HandleGetPrograms(context *gin.Context, getter Service) {
 }
 
 func HandleGetProgram(context *gin.Context, getter Service) {
-	programName := context.Param("program")
-	program, err := getter.GetProgram(programName)
+	programName := context.Param(ProgramName)
+	currentProgram, err := getter.GetProgram(programName)
 	if err != nil {
 		sendError(context, err)
-		panic("error while getting program " + programName)
+		panic(program.ErrorGetProgram)
 	}
 
-	programResponse := converter.ConvertProgramToResponse(program)
+	programResponse := converter.ConvertProgramToResponse(currentProgram)
 	context.JSON(http.StatusOK, gin.H{
 		"program": programResponse,
+	})
+}
+
+func HandleGetHotkeys(context *gin.Context, getter Service) {
+	programName := context.Param(ProgramName)
+	hotkeys, err := getter.GetHotkeysForProgram(programName)
+	if err != nil {
+		sendError(context, err)
+		panic(program.ErrorGetProgram)
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"hotkeys": hotkeys,
 	})
 }
 

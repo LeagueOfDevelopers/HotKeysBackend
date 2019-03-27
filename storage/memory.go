@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"HotKeysBackend/hotkey"
 	"HotKeysBackend/key"
 	"HotKeysBackend/program"
 )
@@ -40,6 +41,15 @@ func (repository *programInMemoryRepository) Get(name string) (*program.Program,
 		}
 	}
 	return nil, program.ErrorProgramNotFound
+}
+
+func (repository *programInMemoryRepository) GetHotkeys(name string) ([]*hotkey.Hotkey, error) {
+	currentProgram, err := repository.Get(name)
+	if err != nil {
+		return nil, program.ErrorGetProgram
+	}
+
+	return currentProgram.Hotkeys, nil
 }
 
 func (repository *keyInMemoryRepository) GetAll() ([]*key.Key, error) {

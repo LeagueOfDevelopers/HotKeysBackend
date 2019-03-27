@@ -1,6 +1,7 @@
 package getting
 
 import (
+	"HotKeysBackend/hotkey"
 	"HotKeysBackend/key"
 	"HotKeysBackend/program"
 )
@@ -8,6 +9,7 @@ import (
 type Service interface {
 	GetPrograms() ([]*program.Program, error)
 	GetProgram(name string) (*program.Program, error)
+	GetHotkeysForProgram(name string) ([]*hotkey.Hotkey, error)
 }
 
 type service struct {
@@ -28,4 +30,8 @@ func (s *service) GetPrograms() ([]*program.Program, error) {
 
 func (s *service) GetProgram(name string) (*program.Program, error) {
 	return s.programRepository.Get(name)
+}
+
+func (s *service) GetHotkeysForProgram(name string) ([]*hotkey.Hotkey, error) {
+	return s.programRepository.GetHotkeys(name)
 }

@@ -14,8 +14,10 @@ type Program struct {
 }
 
 var ErrorProgramNotFound = errors.New("program not found")
+var ErrorGetProgram = errors.New("error while getting program")
 
 type Repository interface {
 	GetAll() ([]*Program, error)
-	Get(string) (*Program, error)
+	Get(name string) (*Program, error)
+	GetHotkeys(name string) ([]*hotkey.Hotkey, error)
 }
