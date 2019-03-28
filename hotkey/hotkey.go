@@ -8,5 +8,5 @@ import (
 type Hotkey struct {
 	gorm.Model
 	Description string     `json:"desc"`
-	Combination []*key.Key `json:"combination"`
+	Combination *[]key.Key `json:"combination"`
 }

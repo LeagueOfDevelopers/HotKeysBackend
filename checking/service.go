@@ -28,9 +28,9 @@ func (s *service) Check(projectName string, hotkeyId uint, combination []*key.Ke
 		return false, program.ErrorGetProgram
 	}
 
-	for _, element := range currentHotkeys {
+	for _, element := range *currentHotkeys {
 		isFound := true
-		for i, currentCombination := range element.Combination {
+		for i, currentCombination := range *element.Combination {
 			if combination[i].ID != currentCombination.ID {
 				isFound = false
 			}

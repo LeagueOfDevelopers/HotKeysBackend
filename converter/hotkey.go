@@ -7,12 +7,12 @@ type HotkeyResponse struct {
 	Description string `json:"desc"`
 }
 
-func ConvertHotkeysToResponse(hotkeys []*hotkey.Hotkey) []*HotkeyResponse {
-	hotkeysResponse := make([]*HotkeyResponse, len(hotkeys))
-	for i, element := range hotkeys {
-		hotkeysResponse[i] = ConvertHotkeyToResponse(element)
+func ConvertHotkeysToResponse(hotkeys *[]hotkey.Hotkey) *[]HotkeyResponse {
+	hotkeysResponse := make([]HotkeyResponse, len(*hotkeys))
+	for i, element := range *hotkeys {
+		hotkeysResponse[i] = *ConvertHotkeyToResponse(&element)
 	}
-	return hotkeysResponse
+	return &hotkeysResponse
 }
 
 func ConvertHotkeyToResponse(hotkey *hotkey.Hotkey) *HotkeyResponse {

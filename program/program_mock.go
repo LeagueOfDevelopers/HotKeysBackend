@@ -2,7 +2,7 @@ package program
 
 import "HotKeysBackend/hotkey"
 
-var MockPrograms = []*Program{
+var MockPrograms = &[]Program{
 	{
 		Name:     "Sketch",
 		ImageURL: "image url",

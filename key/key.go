@@ -14,6 +14,6 @@ type Key struct {
 var ErrorKeyNotFound = errors.New("key not found")
 
 type Repository interface {
-	GetAll() ([]*Key, error)
+	GetAll() (*[]Key, error)
 	Get(int) (*Key, error)
 }

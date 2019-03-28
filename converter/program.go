@@ -7,12 +7,12 @@ type ProgramResponse struct {
 	ImageURL string `json:"url"`
 }
 
-func ConvertProgramsToResponse(programs []*program.Program) []*ProgramResponse {
-	programsResponse := make([]*ProgramResponse, len(programs))
-	for i, element := range programs {
-		programsResponse[i] = ConvertProgramToResponse(element)
+func ConvertProgramsToResponse(programs *[]program.Program) *[]ProgramResponse {
+	programsResponse := make([]ProgramResponse, len(*programs))
+	for i, element := range *programs {
+		programsResponse[i] = *ConvertProgramToResponse(&element)
 	}
-	return programsResponse
+	return &programsResponse
 }
 
 func ConvertProgramToResponse(program *program.Program) *ProgramResponse {
