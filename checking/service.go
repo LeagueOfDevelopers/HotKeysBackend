@@ -6,7 +6,7 @@ import (
 )
 
 type Service interface {
-	Check(projectName string, hotkeyId uint, combination []*key.Key) (bool, error)
+	Check(projectId uint, hotkeyId uint, combination []*key.Key) (bool, error)
 }
 
 type service struct {
@@ -21,9 +21,9 @@ func CreateService(programRepository program.Repository, keyRepository key.Repos
 	}
 }
 
-// TODO test it
-func (s *service) Check(projectName string, hotkeyId uint, combination []*key.Key) (bool, error) {
-	currentHotkeys, err := s.programRepository.GetHotkeys(projectName)
+// TODO
+func (s *service) Check(projectId uint, hotkeyId uint, combination []*key.Key) (bool, error) {
+	currentHotkeys, err := s.programRepository.GetHotkeys(projectId)
 	if err != nil {
 		return false, program.ErrorGetProgram
 	}

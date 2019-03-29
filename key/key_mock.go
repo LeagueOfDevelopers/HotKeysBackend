@@ -1,6 +1,6 @@
 package key
 
-var MockKeys = &[]Key{
+var MockKeys = []Key{
 	{
 		Code: 1,
 		Name: "1",

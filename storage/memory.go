@@ -15,11 +15,11 @@ type keyInMemoryRepository struct {
 }
 
 var programRepository = &programInMemoryRepository{
-	Programs: program.MockPrograms,
+	Programs: &program.MockPrograms,
 }
 
 var keyRepository = &keyInMemoryRepository{
-	Keys: key.MockKeys,
+	Keys: &key.MockKeys,
 }
 
 func GetProgramInMemoryRepository() program.Repository {
@@ -34,17 +34,18 @@ func (repository *programInMemoryRepository) GetAll() (*[]program.Program, error
 	return repository.Programs, nil
 }
 
-func (repository *programInMemoryRepository) Get(name string) (*program.Program, error) {
+func (repository *programInMemoryRepository) Get(id uint) (*program.Program, error) {
 	for _, element := range *repository.Programs {
-		if element.Name == name {
+		if element.Id == id {
 			return &element, nil
 		}
 	}
+
 	return nil, program.ErrorProgramNotFound
 }
 
-func (repository *programInMemoryRepository) GetHotkeys(name string) (*[]hotkey.Hotkey, error) {
-	currentProgram, err := repository.Get(name)
+func (repository *programInMemoryRepository) GetHotkeys(id uint) (*[]hotkey.Hotkey, error) {
+	currentProgram, err := repository.Get(id)
 	if err != nil {
 		return nil, program.ErrorGetProgram
 	}
@@ -62,5 +63,6 @@ func (repository *keyInMemoryRepository) Get(code int) (*key.Key, error) {
 			return &element, nil
 		}
 	}
+
 	return nil, key.ErrorKeyNotFound
 }

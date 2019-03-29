@@ -8,8 +8,8 @@ import (
 
 type Service interface {
 	GetPrograms() (*[]program.Program, error)
-	GetProgram(name string) (*program.Program, error)
-	GetHotkeysForProgram(name string) (*[]hotkey.Hotkey, error)
+	GetProgram(id uint) (*program.Program, error)
+	GetHotkeysForProgram(id uint) (*[]hotkey.Hotkey, error)
 }
 
 type service struct {
@@ -28,10 +28,10 @@ func (s *service) GetPrograms() (*[]program.Program, error) {
 	return s.programRepository.GetAll()
 }
 
-func (s *service) GetProgram(name string) (*program.Program, error) {
-	return s.programRepository.Get(name)
+func (s *service) GetProgram(id uint) (*program.Program, error) {
+	return s.programRepository.Get(id)
 }
 
-func (s *service) GetHotkeysForProgram(name string) (*[]hotkey.Hotkey, error) {
-	return s.programRepository.GetHotkeys(name)
+func (s *service) GetHotkeysForProgram(id uint) (*[]hotkey.Hotkey, error) {
+	return s.programRepository.GetHotkeys(id)
 }

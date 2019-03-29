@@ -2,15 +2,15 @@ package program
 
 import "HotKeysBackend/hotkey"
 
-var MockPrograms = &[]Program{
+var MockPrograms = []Program{
 	{
 		Name:     "Sketch",
 		ImageURL: "image url",
-		Hotkeys:  hotkey.MockHotkeys,
+		Hotkeys:  &hotkey.MockHotkeys,
 	},
 	{
 		Name:     "Figma",
 		ImageURL: "image url2",
-		Hotkeys:  hotkey.MockHotkeys2,
+		Hotkeys:  &hotkey.MockHotkeys2,
 	},
 }

@@ -1,3 +1,3 @@
 package constant
 
-const ProgramName = "program"
+const ProgramId = "programId"
