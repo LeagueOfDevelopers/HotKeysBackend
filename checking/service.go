@@ -3,6 +3,7 @@ package checking
 import (
 	"HotKeysBackend/key"
 	"HotKeysBackend/program"
+	"HotKeysBackend/utils"
 )
 
 type Service interface {
@@ -25,7 +26,7 @@ func CreateService(programRepository program.Repository, keyRepository key.Repos
 func (s *service) Check(projectId uint, hotkeyId uint, combination []*key.Key) (bool, error) {
 	currentHotkeys, err := s.programRepository.GetHotkeys(projectId)
 	if err != nil {
-		return false, program.ErrorGetProgram
+		return false, utils.ErrorGetProgram
 	}
 
 	for _, element := range *currentHotkeys {

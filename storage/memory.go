@@ -4,6 +4,7 @@ import (
 	"HotKeysBackend/hotkey"
 	"HotKeysBackend/key"
 	"HotKeysBackend/program"
+	"HotKeysBackend/utils"
 )
 
 type programInMemoryRepository struct {
@@ -41,13 +42,13 @@ func (repository *programInMemoryRepository) Get(id uint) (*program.Program, err
 		}
 	}
 
-	return nil, program.ErrorProgramNotFound
+	return nil, utils.ErrorProgramNotFound
 }
 
 func (repository *programInMemoryRepository) GetHotkeys(id uint) (*[]hotkey.Hotkey, error) {
 	currentProgram, err := repository.Get(id)
 	if err != nil {
-		return nil, program.ErrorGetProgram
+		return nil, utils.ErrorGetProgram
 	}
 
 	return currentProgram.Hotkeys, nil
@@ -64,5 +65,5 @@ func (repository *keyInMemoryRepository) Get(code int) (*key.Key, error) {
 		}
 	}
 
-	return nil, key.ErrorKeyNotFound
+	return nil, utils.ErrorKeyNotFound
 }

@@ -1,10 +1,8 @@
 package getting
 
 import (
-	"HotKeysBackend/constant"
 	"HotKeysBackend/converter"
-	"HotKeysBackend/hotkey"
-	"HotKeysBackend/program"
+	"HotKeysBackend/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -13,8 +11,8 @@ import (
 func HandleGetPrograms(context *gin.Context, getter Service) {
 	programs, err := getter.GetPrograms()
 	if err != nil {
-		sendError(context, err)
-		panic(program.ErrorGetProgram)
+		utils.SendError(context, err)
+		panic(utils.ErrorGetProgram)
 	}
 
 	programsResponse := converter.ConvertProgramsToResponse(programs)
@@ -24,24 +22,17 @@ func HandleGetPrograms(context *gin.Context, getter Service) {
 }
 
 func HandleGetProgram(context *gin.Context, getter Service) {
-	queryParams := context.Request.URL.Query()
-
-	if len(queryParams[constant.ProgramId]) == 0 {
-		sendError(context, program.ErrorNoProgramIdFound)
-		panic(program.ErrorProgramIdFormat)
-	}
-
-	paramProgramId, err := strconv.ParseUint(queryParams[constant.ProgramId][0], 10, 64)
+	paramProgramId, err := strconv.ParseUint(context.Param(utils.ProgramId), 10, 64)
 	if err != nil {
-		sendError(context, err)
-		panic(program.ErrorProgramIdFormat)
+		utils.SendError(context, err)
+		panic(utils.ErrorWrongProgramIdFormat)
 	}
 
 	programId := uint(paramProgramId)
-	currentProgram, err := getter.GetProgram(programId)
+	currentProgram, err := getter.GetProgram(uint(programId))
 	if err != nil {
-		sendError(context, err)
-		panic(program.ErrorGetProgram)
+		utils.SendError(context, err)
+		panic(utils.ErrorGetProgram)
 	}
 
 	programResponse := converter.ConvertProgramToResponse(currentProgram)
@@ -51,29 +42,21 @@ func HandleGetProgram(context *gin.Context, getter Service) {
 }
 
 func HandleGetHotkeys(context *gin.Context, getter Service) {
-	queryParams := context.Request.URL.Query()
-	paramProgramId, err := strconv.ParseUint(queryParams[constant.ProgramId][0], 10, 64)
+	paramProgramId, err := strconv.ParseUint(context.Param(utils.ProgramId), 10, 64)
 	if err != nil {
-		sendError(context, err)
-		panic(program.ErrorProgramIdFormat)
+		utils.SendError(context, err)
+		panic(utils.ErrorWrongProgramIdFormat)
 	}
 
 	programId := uint(paramProgramId)
 	hotkeys, err := getter.GetHotkeysForProgram(programId)
 	if err != nil {
-		sendError(context, err)
-		panic(hotkey.ErrorHotkeysNotFound)
+		utils.SendError(context, err)
+		panic(utils.ErrorGetHotkeys)
 	}
 
 	hotkeysResponse := converter.ConvertHotkeysToResponse(hotkeys)
 	context.JSON(http.StatusOK, gin.H{
 		"hotkeys": hotkeysResponse,
-	})
-}
-
-func sendError(context *gin.Context, err error) {
-	context.JSON(http.StatusInternalServerError, gin.H{
-		// TODO is it safe?
-		"error": err.Error(),
 	})
 }

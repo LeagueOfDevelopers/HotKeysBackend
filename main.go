@@ -4,14 +4,16 @@ import (
 	"HotKeysBackend/checking"
 	"HotKeysBackend/getting"
 	"HotKeysBackend/storage"
+	"HotKeysBackend/utils"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
 var (
 	handleGetPrograms = "/programs/"
-	handleGetProgram  = "/program/"
-	handleGetHotkeys  = "/program/hotkeys"
-	handleCheckHotkey = "/program/hotkeys/check"
+	handleGetProgram  = fmt.Sprintf("/programs/:%s", utils.ProgramId)
+	handleGetHotkeys  = fmt.Sprintf("/programs/:%s/hotkeys", utils.ProgramId)
+	handleCheckHotkey = fmt.Sprintf("/programs/:%s/hotkeys/:%s/check", utils.ProgramId, utils.HotkeyId)
 )
 
 func main() {
