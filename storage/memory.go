@@ -36,7 +36,7 @@ func (repository *programInMemoryRepository) GetAll() (*[]program.Program, error
 
 func (repository *programInMemoryRepository) Get(id uint) (*program.Program, error) {
 	for _, element := range *repository.Programs {
-		if element.Id == id {
+		if element.ID == id {
 			return &element, nil
 		}
 	}

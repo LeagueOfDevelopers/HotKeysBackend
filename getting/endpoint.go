@@ -5,13 +5,10 @@ import (
 	"HotKeysBackend/converter"
 	"HotKeysBackend/hotkey"
 	"HotKeysBackend/program"
-	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 )
-
-var ErrorNoProgramIdFound = errors.New("no param for program id")
 
 func HandleGetPrograms(context *gin.Context, getter Service) {
 	programs, err := getter.GetPrograms()
@@ -30,7 +27,7 @@ func HandleGetProgram(context *gin.Context, getter Service) {
 	queryParams := context.Request.URL.Query()
 
 	if len(queryParams[constant.ProgramId]) == 0 {
-		sendError(context, ErrorNoProgramIdFound)
+		sendError(context, program.ErrorNoProgramIdFound)
 		panic(program.ErrorProgramIdFormat)
 	}
 

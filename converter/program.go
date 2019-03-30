@@ -3,6 +3,7 @@ package converter
 import "HotKeysBackend/program"
 
 type ProgramResponse struct {
+	Id       uint   `json:"id"`
 	Name     string `json:"name"`
 	ImageURL string `json:"url"`
 }
@@ -17,6 +18,7 @@ func ConvertProgramsToResponse(programs *[]program.Program) *[]ProgramResponse {
 
 func ConvertProgramToResponse(program *program.Program) *ProgramResponse {
 	return &ProgramResponse{
+		Id:       program.ID,
 		Name:     program.Name,
 		ImageURL: program.ImageURL,
 	}
