@@ -25,8 +25,6 @@ func main() {
 	//defer db.Close()
 	//
 	//db.Create(&program.Program{})
-
-	// TODO
 	//programStorage := storage.GetProgramDatabaseRepository()
 	//keyStorage := storage.GetKeyDatabaseRepository()
 
