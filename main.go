@@ -6,8 +6,10 @@ import (
 	"HotKeysBackend/storage"
 	"HotKeysBackend/utils"
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"time"
 )
 
 var (
@@ -34,6 +36,17 @@ func main() {
 	checker := checking.CreateService(programStorage, keyStorage)
 
 	router := gin.Default()
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"https://foo.com"},
+		AllowMethods:     []string{"POST", "GET", "PUT"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "https://github.com"
+		},
+		MaxAge: 4 * time.Hour,
+	}))
 
 	router.GET(handleGetPrograms, func(context *gin.Context) {
 		getting.HandleGetPrograms(context, getter)
