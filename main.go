@@ -7,6 +7,7 @@ import (
 	"HotKeysBackend/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 var (
@@ -17,7 +18,15 @@ var (
 )
 
 func main() {
-	// TODO uncomment when database appears
+	//db, err := gorm.Open("sqlite3", "test.db")
+	//if err != nil {
+	//	panic("failed to connect database")
+	//}
+	//defer db.Close()
+	//
+	//db.Create(&program.Program{})
+
+	// TODO
 	//programStorage := storage.GetProgramDatabaseRepository()
 	//keyStorage := storage.GetKeyDatabaseRepository()
 

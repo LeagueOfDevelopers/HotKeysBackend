@@ -2,3 +2,5 @@
 Будет удалено vendor/
 /vendor/
 .idea
+/*.db
+Будет удалено test.db

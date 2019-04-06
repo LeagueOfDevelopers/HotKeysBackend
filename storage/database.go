@@ -13,13 +13,11 @@ const (
 
 func GetProgramDatabaseRepository() program.Repository {
 	// TODO
-	//database := getDatabase(databasePath)
 	return nil
 }
 
 func GetKeyDatabaseRepository() key.Repository {
 	// TODO
-	//database := getDatabase(databasePath)
 	return nil
 }
 
