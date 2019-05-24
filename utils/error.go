@@ -17,6 +17,8 @@ var ErrorWrongHotkeyIdFormat = errors.New("hotkey id wrong format")
 
 var ErrorKeyNotFound = errors.New("key not found")
 
+var ErrorChecking = errors.New("error while checking")
+
 func SendError(context *gin.Context, err error) {
 	context.JSON(http.StatusInternalServerError, gin.H{
 		// TODO is it safe?
